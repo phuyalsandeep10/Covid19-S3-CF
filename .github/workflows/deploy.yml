@@ -24,8 +24,7 @@ jobs:
       - name: Install dependencies and build the project
         run: |
           npm install
-           npm install -g npm@8.19.4
-          
+          export NODE_OPTIONS=--openssl-legacy-provider
           CI=false npm run build  # Disable treating warnings as errors
 
       # Step 4: Configure AWS credentials using GitHub secrets
