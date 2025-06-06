@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { NativeSelect, FormControl } from '@material-ui/core';
 
 import { fetchCountries } from '../../api';
-
 import styles from './CountryPicker.module.css';
 
 const Countries = ({ handleCountryChange }) => {
@@ -10,7 +9,13 @@ const Countries = ({ handleCountryChange }) => {
 
   useEffect(() => {
     const fetchAPI = async () => {
-      setCountries(await fetchCountries());
+      try {
+        const data = await fetchCountries();
+        setCountries(data);
+      } catch (error) {
+        console.error("Failed to fetch countries:", error);
+        setCountries([]); // fallback to prevent crash
+      }
     };
 
     fetchAPI();
@@ -19,8 +24,11 @@ const Countries = ({ handleCountryChange }) => {
   return (
     <FormControl className={styles.formControl}>
       <NativeSelect defaultValue="" onChange={(e) => handleCountryChange(e.target.value)}>
-        <option value="">United States</option>
-        {countries.map((country, i) => <option key={i} value={country}>{country}</option>)}
+        <option value="">Nepal</option>
+        {Array.isArray(countries) &&
+          countries.map((country, i) => (
+            <option key={i} value={country}>{country}</option>
+          ))}
       </NativeSelect>
     </FormControl>
   );
