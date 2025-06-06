@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies and build the project
         run: |
           npm install
-           npm install -g npm@11.4.1
+           npm install -g npm@8.19.4
           
           CI=false npm run build  # Disable treating warnings as errors
 
